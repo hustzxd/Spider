@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="building_name">
+        <item>西12</item>
+        <item>东9</item>
+        <item>南1</item>
+        <item>沁苑13栋</item>
+    </string-array>
+</resources>
