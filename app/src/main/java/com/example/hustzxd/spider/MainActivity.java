@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,17 +26,17 @@ import cn.bmob.v3.listener.SaveListener;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    final private String TAG = "sss";
     private WifiManager mWifiManager;
     private TextView mInfoTextView;
     private ProgressBar mProgressBar;
     private FloatingActionButton fab;
     private Spinner mBuildingNameSpinner;
-    private TextInputEditText mClassnameTextEdit;
+    private TextInputEditText mRoomNameTextEdit;
     private TextInputEditText mXLocationTextEdit;
     private TextInputEditText mYLocationTextEdit;
     private String mBuildingName;
-    private String mClassname;
+    private String mRoomName;
     private Integer mXLocation;
     private Integer mYLocation;
     private boolean mIsUpdateSuccess;
@@ -51,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mInfoTextView = (TextView) findViewById(R.id.tv_info);
         mBuildingNameSpinner = (Spinner) findViewById(R.id.spinner_building_name);
-        mClassnameTextEdit = (TextInputEditText) findViewById(R.id.class_name);
-        mXLocationTextEdit = (TextInputEditText) findViewById(R.id.XLocation);
-        mYLocationTextEdit = (TextInputEditText) findViewById(R.id.YLoacation);
+        mRoomNameTextEdit = (TextInputEditText) findViewById(R.id.class_name);
+        mXLocationTextEdit = (TextInputEditText) findViewById(R.id.x);
+        mYLocationTextEdit = (TextInputEditText) findViewById(R.id.y);
         mIsUpdateSuccess = true;
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -67,16 +68,21 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 mBuildingName = mBuildingNameSpinner.getSelectedItem().toString();
-                Log.i("dxz", "mBuildingName = " + mBuildingName);
-                mClassname = mClassnameTextEdit.getText().toString();
-                mXLocation = Integer.parseInt(mXLocationTextEdit.getText().toString());
-                Log.i("dxz", mXLocation.toString());
-                mYLocation = Integer.parseInt(mYLocationTextEdit.getText().toString());
-                if (mClassname == null || mXLocation == null || mYLocation == null ||
-                        "".equals(mClassname) || "".equals(mXLocation) || "".equals(mYLocation)) {
-                    toast("please input!");
+                mRoomName = mRoomNameTextEdit.getText().toString();
+                if (TextUtils.isEmpty(mRoomName)) {
+                    mRoomNameTextEdit.setError("please input room name!");
                     return;
                 }
+                if (TextUtils.isEmpty(mXLocationTextEdit.getText().toString())) {
+                    mXLocationTextEdit.setError("please input x");
+                    return;
+                }
+                mXLocation = Integer.parseInt(mXLocationTextEdit.getText().toString());
+                if (TextUtils.isEmpty(mYLocationTextEdit.getText().toString())) {
+                    mYLocationTextEdit.setError("please input y");
+                    return;
+                }
+                mYLocation = Integer.parseInt(mYLocationTextEdit.getText().toString());
                 new getWifiInfo().execute();
             }
         });
@@ -150,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("dxz", "append");
             WifiInfo wifiInfo = new WifiInfo();
             wifiInfo.setBuildingName(mBuildingName);
-            wifiInfo.setClassName(mClassname);
+            wifiInfo.setRoomName(mRoomName);
             wifiInfo.setX(mXLocation);
             wifiInfo.setY(mYLocation);
             List<String> SSIDs = new ArrayList<>();

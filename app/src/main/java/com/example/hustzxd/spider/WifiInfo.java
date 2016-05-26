@@ -10,7 +10,7 @@ import cn.bmob.v3.BmobObject;
  */
 public class WifiInfo extends BmobObject {
     private String BuildingName;
-    private String ClassName;
+    private String RoomName;
     private Integer x;
     private Integer y;
     private List<String> BSSIDs;
@@ -41,8 +41,8 @@ public class WifiInfo extends BmobObject {
         this.RSSIs = RSSIs;
     }
 
-    public String getClassName() {
-        return ClassName;
+    public String getRoomName() {
+        return RoomName;
     }
 
     public String getBuildingName() {
@@ -53,8 +53,8 @@ public class WifiInfo extends BmobObject {
         BuildingName = buildingName;
     }
 
-    public void setClassName(String className) {
-        ClassName = className;
+    public void setRoomName(String roomName) {
+        RoomName = roomName;
     }
 
     public Integer getX() {
